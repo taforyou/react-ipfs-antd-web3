@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Web3 from "web3";
 import { Form, Icon, Input, Button, Card } from "antd";
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
   constructor(props) {
@@ -39,11 +40,12 @@ class Home extends Component {
   }
 
   handleCheckAll() {
-    // เอาไว้ถาม Panot อีกที
+    // เอาไว้ถาม Panot อีกที ทำไมต้อง .then แล้วถึง console.log
     //this.web3.eth.getBalance(this.state.account).then(console.log);
-    this.web3.eth.getBalance(this.state.account).then(test => {
-      console.log(this.web3.utils.fromWei(test, "ether"));
-    });
+    //return <p>Test Clicked !!!</p>
+    console.log("Do Nothing now");
+    //Link('/simplecontract');
+    
   }
 
   render() {
@@ -83,14 +85,15 @@ class Home extends Component {
               />
             </Form.Item>
             <Form.Item>
+
               <Button
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
-                onClick={this.handleOnClick}
+                onClick={() => this.handleCheckAll()}
                 style={{ width: 90, margin: "auto" }}
               >
-                Host
+                <Link to='/SimpleContract'>Simple</Link>
               </Button>
             </Form.Item>
             <hr />
@@ -108,6 +111,8 @@ class Home extends Component {
               >
                 Client
               </Button>
+              
+              <li><Link to='/SimpleContract'>Simple</Link></li>
             </Form.Item>
           </Form>
         </Card>
