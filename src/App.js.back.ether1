@@ -1,0 +1,111 @@
+import React, { Component } from "react";
+import Web3 from "web3";
+import Button from "antd/lib/button";
+import "./App.css";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isConnected: false,
+      account: ""
+    };
+
+    // this.web3 = new Web3(
+    //   new Web3.providers.HttpProvider("https://kovan.infura.io/v3/33744f42bf90490e8b5004f499243838")
+    //   //new Web3.providers.HttpProvider("http://localhost:8545")
+    // );
+
+    this.web3 = new Web3(Web3.givenProvider);
+
+    //this.submitList = this.submitList.bind(this);
+
+    // this.web3 = new Web3(
+    //   //new Web3.providers.HttpProvider("https://kovan.infura.io/v3/33744f42bf90490e8b5004f499243838")
+
+    //   //new Web3.providers.HttpProvider("http://localhost:8545")
+    // );
+  }
+
+  // async submitList() {
+  //   this.saveTodos();
+  // }
+
+  // async saveTodos() {
+  //   const newTodo = await this.web3.eth.getAccounts().then(acc => {
+  //     // console.log(acc[0]);
+  //     if (acc[0] === "undefined") {
+  //       console.log("Hey Hey");
+  //       //this.setState({ account: acc[0], isConnected : true });
+  //     } else {
+  //       console.log("Ho Ho");
+  //       //this.setState({ account: acc[0]});
+  //     }
+  //   });
+  //   console.log(newTodo);
+  // }
+
+  getTodos() {
+    // this.web3.eth.getAccounts().then(acc => {
+    //   // console.log(acc[0]);
+    //   if (acc[0] == 'undefined'){
+    //     console.log('Hey Hey');
+    //     //this.setState({ account: acc[0], isConnected : true });
+    //   }
+    //   else {
+    //     console.log('Ho Ho');
+    //     //this.setState({ account: acc[0]});
+    //   }
+
+    // });
+
+   // this.submitList();
+
+    this.web3.eth.getAccounts().then(acc => {
+      // เมื่อ acc[0] มีค่า
+      if (acc[0]) {
+        //console.log("Hey Hey");
+        console.log(acc);
+        console.log(acc[0]);
+        this.setState({ account: acc[0], isConnected : true });
+      } 
+    });
+
+    //this.web3.eth.getAccounts().then(console.log);
+    // this.web3.eth
+    //   .getBalance("0xf63f4fbeceba30f93383fb0d39b4140c9f5859a8")
+    //   .then(console.log);
+    //console.log(this.web3.eth.getBalance());
+  }
+
+  componentWillMount() {
+    // console.log(this.web3);
+    // if(this.web3 && this.web3.isConnected()) {
+    //   this.setState({isConnected: true});
+    // }
+  }
+  componentDidMount() {
+    this.getTodos();
+    // this.web3.getAccounts().then(console.log);
+    // if(this.web3 && this.web3.isConnected()) {
+    //   this.setState({isConnected: true});
+    // }
+  }
+  render() {
+    return (
+      <div className="App">
+        <h2>Ether Barcarrat</h2>
+        <br />
+        {this.state.isConnected ? "Connected to Ethereum Network" : "Not Connected"}
+        <p>{this.state.isConnected ? "Your account is " + this.state.account : "Please login though metamask"} </p>
+
+        {/* <p>Hello World !!!</p>
+        <div className="App">
+          <Button type="primary">Button</Button>
+        </div> */}
+        
+      </div>
+    );
+  }
+}
+export default App;
