@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
+
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+const history = createBrowserHistory({basename: window.location.pathname})
+// ใช้ Router ธรรมดาสร้าง เพราะเราสร้าง custom
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <App />
-  </BrowserRouter>
+  </Router>
 , document.getElementById('root'));
 registerServiceWorker();
