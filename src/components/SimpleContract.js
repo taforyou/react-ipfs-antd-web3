@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import Web3 from "web3";
 import { Form, Icon, Input, Button, Card } from "antd";
 import { Link } from "react-router-dom";
-import { callbackify } from "util";
 
 class SimpleContract extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contractAddress: "0x1cE946B3f26E27DF21984bc1A4EF6011BEDFb170"
+      contractAddress: "0x1cE946B3f26E27DF21984bc1A4EF6011BEDFb170",
+      balance : 0
     };
     this.web3 = new Web3(Web3.givenProvider);
   }
@@ -21,19 +21,12 @@ class SimpleContract extends Component {
     //this.web3 = new web3.eth.Contract();
     //console.log(this.web3.eth.Contract());
     //console.log(this.web3);
-    this.tempTest2();
+    this._getBalance();
   }
 
-  tempTestSetContractAddress() {
-    //var _contractAddress = 'aabbcc';
-    //this.setState({ contractAddress: _contractAddress});
-  }
 
-  tempTest2() {
-    // var myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
-    //   from: '0x1234567890123456789012345678901234567891', // default from address
-    //   gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
-    // });
+  _getBalance() {
+    // เอามาจากตัวอย่างที่คุณเนยทำ
     var abi = [
       {
         constant: false,
@@ -70,19 +63,18 @@ class SimpleContract extends Component {
         type: "function"
       }
     ];
-    //var myContract = new web3.eth.contract(abi);
-    //var MyContract = web3.eth.contract(abiArray);
-    //var MyContract = this.web3.eth.contract(abi);
-    var contract = new this.web3.eth.Contract(abi, this.state.contractAddress);
-    contract.methods.getBalance().call().then(console.log);
-    // using the promise
-    //contract.methods.getBalance()
+    
+    var myContract = new this.web3.eth.Contract(abi, this.state.contractAddress);
+    myContract.methods.getBalance().call().then(_balance => {
+      this.setState({ balance : _balance});
+    });
   }
 
   render() {
     return (
       <div className="App">
         <p>SimpleContract</p>
+        <p>ทดสอบการส่งค่าผ่าน props เฉยๆ ไม่เกี่ยวแมวอะไรเลย</p>
         <p>{this.props.location.state}</p>
         <Card title={"SimpleContract"} style={{ width: 350, margin: "auto" }}>
           <Form className="login-form">
@@ -92,7 +84,7 @@ class SimpleContract extends Component {
                   <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                 }
                 placeholder="Current Balance ="
-                value={this.state.account}
+                value={this.state.balance}
                 onChange={this.handleChange}
               />
             </Form.Item>
