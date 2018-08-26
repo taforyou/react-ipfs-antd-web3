@@ -8,7 +8,8 @@ class SimpleContract extends Component {
     super(props);
     this.state = {
       contractAddress: "0x1cE946B3f26E27DF21984bc1A4EF6011BEDFb170",
-      balance : 0
+      balance : 0,
+      mycontract: null
     };
     this.web3 = new Web3(Web3.givenProvider);
   }
@@ -68,6 +69,71 @@ class SimpleContract extends Component {
     myContract.methods.getBalance().call().then(_balance => {
       this.setState({ balance : _balance});
     });
+    this.setState({mycontract: myContract});
+  }
+
+  // function setBalance() {
+  //  
+  //   newBalance = parseInt(document.getElementById("newBalance").value);
+  //   SimpleContract.setBalance(newBalance, function(error, result) {
+  //       if (error)
+  //       return;
+  //       addStatusLine("");
+  //       addStatusLine("calling setBalance(" + newBalance + ")");
+  //       txHash = result;
+  //       addStatusLine("TxHash = <a href='https://kovan.etherscan.io/tx/" + result + "' target='_blank'>" + result + "</a>");
+  //   });
+  // }
+  _setBalance() {
+    var abi = [
+      {
+        constant: false,
+        inputs: [
+          {
+            name: "newBalance",
+            type: "uint256"
+          }
+        ],
+        name: "setBalance",
+        outputs: [],
+        payable: false,
+        stateMutability: "nonpayable",
+        type: "function"
+      },
+      {
+        inputs: [],
+        payable: false,
+        stateMutability: "nonpayable",
+        type: "constructor"
+      },
+      {
+        constant: true,
+        inputs: [],
+        name: "getBalance",
+        outputs: [
+          {
+            name: "",
+            type: "uint256"
+          }
+        ],
+        payable: false,
+        stateMutability: "view",
+        type: "function"
+      }
+    ];
+
+    //const _amount = new Big
+    //var _value = this.web3.utils.toBN('200000000000000000000001');
+
+    // var myContract = new this.web3.eth.Contract(abi, this.state.contractAddress);
+    // ต้องแบบนี้นะ SET ได้แล้ว
+    this.state.mycontract.methods.setBalance(9999).send({from: this.props.location.state})
+    //this.state.mycontract.setBalance(1234000000000000000000).send({from: this.state.contractAddress})
+    // .on("receipt", (res) => {
+    //   console.log(res);
+    // }).catch(err => {
+    //   console.log(err);
+    // })
   }
 
   render() {
@@ -106,7 +172,7 @@ class SimpleContract extends Component {
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
-                onClick={() => this.handleCheckAll()}
+                onClick={() => this._setBalance()}
                 style={{ width: 180, margin: "auto" }}
               >
                 Set New Balance
