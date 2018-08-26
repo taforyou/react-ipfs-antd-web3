@@ -26,6 +26,7 @@ class Home extends Component {
         });
       }
     });
+
   }
 
   // ไม่รู้ทำไมเหมือนกัน
@@ -93,7 +94,7 @@ class Home extends Component {
                 onClick={() => this.handleCheckAll()}
                 style={{ width: 90, margin: "auto" }}
               >
-                <Link to='/SimpleContract'>Simple</Link>
+                <Link to='/'>Host</Link>
               </Button>
             </Form.Item>
             <hr />
@@ -112,7 +113,15 @@ class Home extends Component {
                 Client
               </Button>
               
-              <li><Link to='/SimpleContract'>Simple</Link></li>
+              {/* <li><Link to='/SimpleContract'>Simple (Pass account)</Link></li>
+              <br />
+              <Link to='/SimpleContract' params={{ testvalue: "hello" }}>Player #8</Link> */}
+
+              <li><Link to={{ pathname: '/SimpleContract', state : this.state.account }}>Simple (Pass account)</Link></li>
+             
+              
+              
+              
             </Form.Item>
           </Form>
         </Card>
